@@ -1,37 +1,42 @@
 import { FormEvent, useState } from 'react';
-import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
+import { InjectedAccountWithMeta, InjectedExtension } from '@polkadot/extension-inject/types';
 import { shortenAddress } from '@/utils/address';
 import { preparePayload } from '@/lib/payload';
 import { LoginResponse } from '@/types';
+import { post } from '@/lib/http';
 
 type Props = {
-  accounts: InjectedAccountWithMeta[]
+  extension: InjectedExtension;
+  accounts: InjectedAccountWithMeta[];
+  onSubmit: (account: InjectedAccountWithMeta) => void;
 }
 
-export function LoginForm({ accounts }: Props) {
+export function LoginForm({ accounts, onSubmit, extension }: Props) {
   const [selectedAccount, setSelectedAccount] = useState(accounts[0]);
   const [error, setError] = useState('');
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+    setError('');
 
-    const payload = preparePayload(selectedAccount);
+    const payload = await preparePayload(extension, selectedAccount);
 
     if (!payload) {
-      setError('You don\'t have the ability to sign payload, please check that extension is enabled');
+      setError('Signature was cancelled from the extension or extension was turned off, please check that extension is enabled');
       return;
     }
 
-    const res = await fetch('/api/v1/signin', {
-      method: 'POST',
-      body: JSON.stringify(payload),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
+    const res = await post('/api/v1/signin', payload);
 
     const { token, error }: LoginResponse = await res.json();
+    // might store token and use it with API, but we also have stored session already
+    // and do not need to use it within app
+    if (error) {
+      setError(error.message);
+      return;
+    }
 
+    onSubmit(selectedAccount);
   };
 
   return (
