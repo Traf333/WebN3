@@ -1,5 +1,5 @@
 "use client"
-function Error(props) {
+function Error() {
   return (
     <div>Error happened</div>
   );

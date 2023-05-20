@@ -1,7 +1,7 @@
 "use client"
-function Error(props) {
+function Error() {
   return (
-    <div>Home eerror page</div>
+    <div>Home error page</div>
   );
 }
 
