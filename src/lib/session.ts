@@ -6,7 +6,7 @@ export const ironOptions = {
   // secure: true should be used in production (HTTPS) but can't be used in development (HTTP)
   cookieOptions: {
     secure: process.env.NODE_ENV === 'production',
-    ttl: 99, // seconds
+    ttl: 10 * 60, // 10 minutes
   },
 };
 

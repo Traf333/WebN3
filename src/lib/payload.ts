@@ -28,12 +28,17 @@ export async function preparePayload(extension: InjectedExtension, account: Inje
 }
 
 export function isValidPayload({ address, message, signature }: Payload) {
-  if (!address || !message || !signature) return false;
+  try {
+    if (!address || !message || !signature) return false;
 
-  const publicKey = decodeAddress(address);
-  const hexPublicKey = u8aToHex(publicKey);
+    const publicKey = decodeAddress(address);
+    const hexPublicKey = u8aToHex(publicKey);
 
-  return signatureVerify(message, signature, hexPublicKey).isValid;
+    return signatureVerify(message, signature, hexPublicKey).isValid;
+  } catch (_e) {
+    // address or signature might have invalid data that +signatureVerify+ throws an exception
+    return false
+  }
 }
 
 export function isValidAddress(address: CryptoAddress) {

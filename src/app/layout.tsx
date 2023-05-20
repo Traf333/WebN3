@@ -17,10 +17,12 @@ export default function RootLayout({
   return (
     <html lang="en">
     <body className={inter.className}>
-      <nav className="p-4 font-bold text-4xl">
-        <Link href="/">WebN3</Link>
-      </nav>
-      <main className="flex min-h-full flex-col px-6 py-12 lg:px-8">
+      <header>
+        <nav className="p-4 font-bold text-4xl">
+          <Link href="/">WebN3</Link>
+        </nav>
+      </header>
+      <main className="flex flex-col px-6 py-12 lg:px-8">
         {children}
       </main>
     </body>
