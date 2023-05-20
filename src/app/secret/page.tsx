@@ -1,8 +1,7 @@
-'use client';
 import { get } from '@/lib/http';
-import { useEffect, useState } from 'react';
-import { LoadingOverlay } from '@/components/LoadingOverlay';
-import { Unauthorized } from '@/components/Unauthorized';
+// import { useEffect, useState } from 'react';
+// import { LoadingOverlay } from '@/components/LoadingOverlay';
+// import { Unauthorized } from '@/components/Unauthorized';
 import Link from 'next/link';
 
 type SecretState = {
@@ -12,20 +11,22 @@ type SecretState = {
 }
 
 async function fetchSecret(): Promise<SecretState> {
-  const res = await get('/api/v1/secret');
+  const res = await get('/api/v1/secret', { cache: 'no-store' });
+  if (res.status === 401) throw 'unauthorized';
+
   return await res.json();
 }
 
 export default async function SecretPage() {
-  const [data, setData] = useState<SecretState>();
-
-  useEffect(() => {
-    fetchSecret().then(setData);
-  }, []);
-
-  if (!data) return <LoadingOverlay />;
-
-  if (data.error) return <Unauthorized />;
+  // const [data, setData] = useState<SecretState>();
+  const data = await fetchSecret();
+  // useEffect(() => {
+  //   fetchSecret().then(setData);
+  // }, []);
+  //
+  // // if (!data) return <LoadingOverlay />;
+  //
+  // if (data.error) return ;
 
   return (
     <div className="m-auto max-w-3xl text-center">
