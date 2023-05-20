@@ -2,6 +2,11 @@
 
 The app for polkadot accounts to obtain their secrets
 
+
+https://github.com/Traf333/WebN3/assets/2113554/553f7535-7b20-4c30-946f-ce2782c95d00
+
+
+
 ## Table of Contents
 
 - [Prerequisites](#prerequisites)
