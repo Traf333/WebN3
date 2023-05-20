@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { web3Accounts, web3Enable } from '@polkadot/extension-dapp';
 import { LoginForm } from '@/components/LoginForm';
 import Link from 'next/link';
 import { destroy, get } from '@/lib/http';
@@ -20,7 +19,10 @@ export default function Home() {
   const [user, setUser] = useState<User | null>(null);
 
   const init = async () => {
-    const extensions = await web3Enable('webn3');
+    // WHAT!?!? Yeah, seems there is some bug between extension and nextjs as it tries to prerender it on
+    const { web3Enable, web3Accounts } = require('@polkadot/extension-dapp');
+
+    const extensions: InjectedExtension[] = await web3Enable('webn3');
     const extension = extensions.find((e) => e.name === 'polkadot-js');
     const [accounts, user] = await Promise.all([
       web3Accounts(),
