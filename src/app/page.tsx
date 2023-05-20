@@ -61,16 +61,19 @@ export default function Home() {
         {!extension && (
           <div>
             It seems you do not have Polkadot extension yet. Please setup one by following
-            <a href="https://polkadot.js.org/extension/">the link</a>
+            <a href="https://polkadot.js.org/extension/" className="font-medium text-blue-600 hover:underline">
+              the link
+            </a>
             and try to refresh page once you have installed it
           </div>
         )}
-        {accounts!.length === 0 && (
+        {extension && accounts!.length === 0 && (
           <div>
             It seems you do not have any accounts yet. Probably you have to create one with Polkadot extension.
             Please create one by following
             <a
               href="https://support.polkadot.network/support/solutions/articles/65000098878-how-to-create-a-dot-account"
+              className="font-medium text-blue-600 hover:underline"
             >
               the link
             </a> and try to refresh page once you have created it
