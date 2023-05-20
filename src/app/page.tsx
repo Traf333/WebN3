@@ -80,7 +80,7 @@ export default function Home() {
                 Go to Secrets page
               </Link>
               <span>|</span>
-              <button onClick={logout} className="font-medium text-blue-600 hover:underline"  >
+              <button onClick={logout} className="font-medium text-blue-600 hover:underline">
                 Logout
               </button>
             </div>

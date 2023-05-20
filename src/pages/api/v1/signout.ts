@@ -4,7 +4,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== 'DELETE') {
-    res.status(404).send("Page Not Found");
+    res.status(404).send('Page Not Found');
     return;
   }
   await req.session.destroy();
