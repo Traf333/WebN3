@@ -12,12 +12,14 @@ type Props = {
 }
 
 export function LoginForm({ accounts, onSubmit, extension }: Props) {
-  const [selectedAccount, setSelectedAccount] = useState(accounts[0]);
+  const [selectedAccount, setSelectedAccount] = useState<InjectedAccountWithMeta | null>(null);
   const [error, setError] = useState('');
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setError('');
+
+    if (!selectedAccount) return;
 
     const payload = await preparePayload(extension, selectedAccount);
 
@@ -60,7 +62,7 @@ export function LoginForm({ accounts, onSubmit, extension }: Props) {
                   type="radio"
                   value={account.address}
                   onChange={() => setSelectedAccount(account)}
-                  checked={account.address === selectedAccount.address}
+                  checked={account.address === selectedAccount?.address}
                   name="address"
                   className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 focus:ring-2"
                 />

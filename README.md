@@ -1,34 +1,82 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# WebN3
 
-## Getting Started
+The app for polkadot accounts to obtain their secrets
 
-First, run the development server:
+## Table of Contents
 
-```bash
+- [Prerequisites](#prerequisites)
+- [Installation](#installation)
+- [Configuration](#configuration)
+- [Usage](#usage)
+- [Backend Endpoints](#backend-endpoints)
+
+## Prerequisites
+
+Before running this application, you will need to have the following installed on your machine:
+
+- Node.js (version ^16)
+- NPM or Yarn
+- Polkadot JS browser extension
+
+## Installation
+
+To install the project dependencies, follow these steps:
+
+1. Clone the repository: `git clone https://github.com/Traf333/WebN3.git`
+2. Change to the project directory: `cd WebN3`
+3. Install dependencies using NPM: `npm install` or using Yarn: `yarn install`
+
+## Configuration
+
+For the configuration the app uses `.env` file so don't forget to add it `cp .env.example .env.local`
+
+## Usage
+
+To run the application, use the following command:
+
+```shell
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Or if you're using Yarn:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```shell
+yarn dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+This will start the development server, and you can access the app in your browser at `http://localhost:3000`.
 
-## Learn More
+## Backend Endpoints
 
-To learn more about Next.js, take a look at the following resources:
+### Show Secret
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **URL:** `GET /api/v1/secret`
+- **Description:** Returns a secret message from the database for specific address
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+### Signin
 
-## Deploy on Vercel
+- **URL:** `POST /api/v1/signin`
+- **Description:** The endpoint for obtaining session token or store session within cookies
+- **Parameters:**
+    - address: `string`. The user’s address. Alphanumeric. No spaces or symbols.
+    - message: `Sign-in request for address <address>.`. `<address>` must be the same as `address`.
+    - signature: `string`. The signature of the message using the user’s address.List any parameters required by this
+      endpoint, if applicable.
+- **Example:**
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+ ```
+POST /api/v1/signin
+Payload {
+	"address": "14GgSVJ1unwjVw4CuMGXYz4P4yT1HzVqEDEiExhiCS84EGQo",
+	"message": "Sign-in request for address 14GgSVJ1unwjVw4CuMGXYz4P4yT1HzVqEDEiExhiCS84EGQo.",
+	"signature": "0xfc03197bd2110f613677913e3d52afbc1ecda9099109f01300a97acde7122d305d87d115cf173632319c6666d829a4585a45462cb3d2df5513f7d5a68c9f1785",
+}
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+### Sing out
+
+- **URL:** `DELETE /api/v1/signout`
+- **Description:** Drops session
+
+
+_PS: Readme content was created with help of ChatGPT_
