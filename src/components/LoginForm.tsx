@@ -22,7 +22,7 @@ export function LoginForm({ accounts, onSubmit, extension }: Props) {
     const payload = await preparePayload(extension, selectedAccount);
 
     if (!payload) {
-      setError('Signature was cancelled from the extension or extension was turned off, please check that extension is enabled');
+      setError('Signature was cancelled from the extension or extension was turned off, please check that the extension is enabled');
       return;
     }
 

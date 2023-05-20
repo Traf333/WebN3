@@ -1,11 +1,12 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { LoginForm } from '@/components/LoginForm';
 import Link from 'next/link';
 import { destroy, get } from '@/lib/http';
 import { User } from '@/types';
 import { InjectedAccountWithMeta, InjectedExtension } from '@polkadot/extension-inject/types';
+import { LoadingOverlay } from '@/components/LoadingOverlay';
 
 async function getUser(): Promise<User> {
   const res = await get('/api/v1/user');
@@ -19,7 +20,7 @@ export default function Home() {
   const [user, setUser] = useState<User | null>(null);
 
   const init = async () => {
-    // WHAT!?!? Yeah, seems there is some bug between extension and nextjs as it tries to prerender it on
+    // WHAT!?!? Yeah, seems there is some bug between extension and nextjs as it tries to prerender it on serverside
     const { web3Enable, web3Accounts } = require('@polkadot/extension-dapp');
 
     const extensions: InjectedExtension[] = await web3Enable('webn3');
@@ -45,7 +46,8 @@ export default function Home() {
     setUser(null);
   };
 
-  if (!extension && !accounts) return <h2>Loading...</h2>;
+
+  if (!extension && !accounts) return <div className="text-center"><LoadingOverlay /></div>;
 
   const readyToLogin = accounts!.length > 0 && !user;
 

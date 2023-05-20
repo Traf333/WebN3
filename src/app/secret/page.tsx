@@ -1,16 +1,18 @@
 'use client';
 import { get } from '@/lib/http';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { LoadingOverlay } from '@/components/LoadingOverlay';
+import Link from 'next/link';
+import { Unauthorized } from '@/components/Unauthorized';
 
 type SecretState = {
   secret: string;
   address: string;
+  error?: { message: string }
 }
 
 async function fetchSecret(): Promise<SecretState> {
-  // await new Promise(resolve => setTimeout(resolve, 3000)); // 3 sec
   const res = await get('/api/v1/secret');
-
   return await res.json();
 }
 
@@ -21,18 +23,23 @@ export default async function SecretPage() {
     fetchSecret().then(setData);
   }, []);
 
+  if (!data) return <LoadingOverlay />;
 
-  if (!data) return (
-    <div>Please login to see the secret</div>
-  );
+  if (data.error) return <Unauthorized />;
 
   return (
-    <div>
-      <h3>Hover to see secret for address {data.address}:</h3>
-      <div
-        className="text-transparent font-black hover:text-slate-800 ml-4 px-4 bg-slate-800 hover:bg-transparent select-none"
-      >
-        {data.secret}
+    <div className="m-auto max-w-3xl text-center">
+      <h1 className="text-4xl mb-4 mt-8">Secret Page</h1>
+      <h2 className="text-xl text-gray-500">
+        Now you can see secret for address {data.address}
+      </h2>
+      <div className="bg-amber-100 p-2 mt-8">
+        <code>{data.secret}</code>
+      </div>
+      <div className="mt-4 flex gap-4 justify-center">
+        <Link href="/" className="font-medium text-blue-600 hover:underline">
+          Go Back
+        </Link>
       </div>
     </div>
   );
