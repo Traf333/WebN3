@@ -2,7 +2,7 @@ import { unsealData } from 'iron-session';
 import { withIronSessionApiRoute } from 'iron-session/next';
 import { ironOptions } from '@/lib/session';
 import { NextApiRequest, NextApiResponse } from 'next';
-import { randomSecret } from '@/utils/address';
+import { randomSecret } from '@/lib/utils';
 import { User } from '@/types';
 
 // obtaining address adds compatibility for both
