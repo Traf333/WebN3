@@ -18,6 +18,7 @@ async function obtainAddress(req: NextApiRequest): Promise<string> {
   return address;
 }
 
+// Stubbed implementation for key value storage;
 let Database: Record<string, string> = {};
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {

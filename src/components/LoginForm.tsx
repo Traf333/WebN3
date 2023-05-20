@@ -1,9 +1,9 @@
 import { FormEvent, useState } from 'react';
-import { InjectedAccountWithMeta, InjectedExtension } from '@polkadot/extension-inject/types';
 import { shortenAddress } from '@/lib/utils';
 import { preparePayload } from '@/lib/payload';
-import { LoginResponse } from '@/types';
 import { post } from '@/lib/http';
+import { LoginResponse } from '@/types';
+import { InjectedAccountWithMeta, InjectedExtension } from '@polkadot/extension-inject/types';
 
 type Props = {
   extension: InjectedExtension;

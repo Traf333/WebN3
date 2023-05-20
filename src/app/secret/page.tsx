@@ -1,9 +1,9 @@
 'use client';
 import { get } from '@/lib/http';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { LoadingOverlay } from '@/components/LoadingOverlay';
-import Link from 'next/link';
 import { Unauthorized } from '@/components/Unauthorized';
+import Link from 'next/link';
 
 type SecretState = {
   secret: string;

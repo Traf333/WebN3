@@ -1,12 +1,12 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { LoginForm } from '@/components/LoginForm';
 import Link from 'next/link';
 import { destroy, get } from '@/lib/http';
+import { LoadingOverlay } from '@/components/LoadingOverlay';
 import { User } from '@/types';
 import { InjectedAccountWithMeta, InjectedExtension } from '@polkadot/extension-inject/types';
-import { LoadingOverlay } from '@/components/LoadingOverlay';
 
 async function getUser(): Promise<User> {
   const res = await get('/api/v1/user');
@@ -46,7 +46,6 @@ export default function Home() {
     setUser(null);
   };
 
-
   if (!extension && !accounts) return <div className="text-center"><LoadingOverlay /></div>;
 
   const readyToLogin = accounts!.length > 0 && !user;
@@ -67,7 +66,8 @@ export default function Home() {
           </div>
         )}
         {accounts!.length === 0 && (
-          <div>It seems you do not have any accounts yet. Probably you have to create one with Polkadot extension.
+          <div>
+            It seems you do not have any accounts yet. Probably you have to create one with Polkadot extension.
             Please create one by following
             <a
               href="https://support.polkadot.network/support/solutions/articles/65000098878-how-to-create-a-dot-account"

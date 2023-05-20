@@ -1,8 +1,8 @@
 import { sealData } from 'iron-session';
 import { withIronSessionApiRoute } from 'iron-session/next';
 import { ironOptions } from '@/lib/session';
-import { NextApiRequest, NextApiResponse } from 'next';
 import { isValidAddress, isValidPayload } from '@/lib/payload';
+import type { NextApiRequest, NextApiResponse } from 'next';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== 'POST') {
